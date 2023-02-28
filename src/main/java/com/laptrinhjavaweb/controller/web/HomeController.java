@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.laptrinhjavaweb.model.NewModel;
 import com.laptrinhjavaweb.service.ICategoryService;
 import com.laptrinhjavaweb.service.INewService;
 
@@ -22,8 +23,14 @@ public class HomeController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String title = "Bài viết 4";
+		String content = "bai viet 4";
 		Long categoryId = 1L;
-		req.setAttribute("news", newService.findByCategoryId(categoryId));
+		NewModel newModel = new NewModel();
+		newModel.setTitle(title);
+		newModel.setContent(content);
+		newModel.setCategoryId(categoryId);
+		newService.save(newModel);
 		req.setAttribute("categories", categoryService.findAll());
 		req.getRequestDispatcher("/views/web/home.jsp").forward(req, resp);
 	}
