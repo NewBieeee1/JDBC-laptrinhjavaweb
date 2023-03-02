@@ -20,8 +20,16 @@ public class NewService implements INewService {
 	@Override
 	public NewModel save(NewModel newModel) {
 		Long newId = newDao.save(newModel);
-		System.out.println(newId);
-		return null;
+		return newDao.findOne(newId);
+	}
+
+	@Override
+	public NewModel update(NewModel updateNew) {
+		NewModel oldNew = newDao.findOne(updateNew.getId());
+		updateNew.setCreatedDate(oldNew.getCreatedDate());
+		updateNew.setCreatedBy(oldNew.getCreatedBy());
+		newDao.update(updateNew);
+		return newDao.findOne(updateNew.getId());
 	}
 
 }
